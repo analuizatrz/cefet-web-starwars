@@ -3,6 +3,8 @@
 // para carregar:
 //  - A lista de filmes
 //  - A introdução de cada filme, quando ele for clicado
+var romanNumbers = { 1:'I', 2:'II', 3:'III', 4:'IV', 5:'V', 6:'VI', 7:'VII' };
+
 $.ajax({
 	url: 'https://swapi.co/api/films/',
 	dataType: 'json',
@@ -19,7 +21,7 @@ function byEpisode(p, q){
 }
 function add(movie){
 	$('#movies ul')
-		.append($('<li>Episode ' + movie.episode_id +': '+ movie.title +'</li>')
+		.append($('<li>Episode ' + romanNumbers[movie.episode_id] +': '+ movie.title +'</li>')
 			.attr('data-episode-url', movie.url)
 			.click(event => { changeIntro(event)}));
 }
@@ -29,7 +31,7 @@ function changeIntro(event){
 		dataType: 'json',
 		success: movie => {
 			$('.reading-animation')
-				.html('Episode ' + movie.episode_id + '\n' + movie.title.toUpperCase() + '\n\n' + movie.opening_crawl);
+				.html('Episode ' + romanNumbers[movie.episode_id] + '\n' + movie.title.toUpperCase() + '\n\n' + movie.opening_crawl);
 		}
 	});
 }
