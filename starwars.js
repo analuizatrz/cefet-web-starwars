@@ -3,10 +3,11 @@
 // para carregar:
 //  - A lista de filmes
 //  - A introdução de cada filme, quando ele for clicado
+
 $.ajax({
 	url: 'https://swapi.co/api/films/',
 	dataType: 'json',
-	success: function(response) {
+	success: response => {
 		console.log(response);
 		response.results.forEach(movie => {
 			add(movie);
@@ -17,5 +18,17 @@ $.ajax({
 function add(movie){
 	$('#movies ul')
 		.append($('<li>Episode ' + movie.episode_id +': '+ movie.title +'</li>')
-		.data('data-episode-url' , movie.url));
+			.attr('data-episode-url', movie.url)
+			.click(event => { changeIntro(event)}));
+}
+
+function changeIntro(event){
+	$.ajax({
+		url: event.currentTarget.getAttribute('data-episode-url'),
+		dataType: 'json',
+		success: movie => {
+			$('.reading-animation')
+				.html('Episode ' + movie.episode_id + '\n' + movie.title.toUpperCase() + '\n\n' + movie.opening_crawl);
+		}
+	});
 }
