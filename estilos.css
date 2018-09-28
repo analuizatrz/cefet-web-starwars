@@ -9,6 +9,7 @@ body {
 }
 
 .container {
+  transform: rotateX(75deg);
   perspective: 200px;
   perspective-origin: 50% 0;
   text-align: center;
